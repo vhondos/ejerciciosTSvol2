@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="abrirPdfButton">Abrir PDF</button>
+    <script>
+        function abrirVentanaCentrada(url, ancho, alto, tiempo) { 
+        let izquierda = screen.width / 2 - ancho / 2; 
+        let arriba = screen.height / 2 - alto / 2; 
+        let ventana = window.open( 
+        url, 
+        "", 
+        "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=" + ancho + 
+        ", height=" + 
+        alto + 
+        ", top=" + 
+        arriba + 
+        ", left=" + 
+        izquierda 
+        ); 
+
+        setTimeout(function() {
+            ventana.close();
+        }, tiempo);
+        } 
+        
+
+        function abrirPDF() {
+            let urlPDF = "https://paularibo.cat/wp-content/uploads/2020/07/los-tres-cerditos-y-el-viento-feroz_52097.pdf"; 
+
+            let ancho = 800;  
+            let alto = 600;   
+
+            abrirVentanaCentrada(urlPDF, ancho, alto, 2000);
+        }
+        document.getElementById('abrirPdfButton').addEventListener('click', abrirPDF);
+
+    </script>
+</body>
+</html>

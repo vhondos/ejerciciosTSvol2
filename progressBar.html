@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="height: 200vh;">
+<div id="progressContainer" style="position: fixed; top: 0; left: 0; width: 100%; background-color: #f3f3f3; height: 5px;">
+    <div id="progressBar" style="height: 100%; width: 0; background-color: #4caf50;"></div>
+</div>
+
+<script>
+    function scrollProgressBar() {
+        var progressBar = document.getElementById("progressBar");
+        
+        var totalHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        var scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
+        var progress = (scrollPosition / totalHeight) * 100;
+        
+        progressBar.style.width = progress + "%";
+    }
+
+    window.onscroll = function() {
+        scrollProgressBar();
+    };
+
+</script>
+
+</body>
+</html>
