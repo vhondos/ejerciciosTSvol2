@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        (function redirectByLanguage() {
+            const params = new URLSearchParams(window.location.search);
+            const lang = params.get('lang'); 
+
+            if (lang === 'en') {
+                window.location.href = './lang-en.html';
+            } else if (lang === 'es') {
+                window.location.href = './lang-es.html';
+            } else {
+                console.warn('Parámetro "lang" no válido o no encontrado.');
+            }
+        })();
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function checkOnlineStatus() {
+            if (navigator.onLine) {
+                console.log('Estás conectado a Internet.');
+                alert('Estás conectado a Internet. Puedes continuar.');
+            } else {
+                console.log('No tienes conexión a Internet.');
+                alert('No tienes conexión a Internet. Verifica tu red.');
+            }
+        }
+        checkOnlineStatus()
+    </script>
+</body>
+</html>
