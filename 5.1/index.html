@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copiar al Portapapeles</title>
+    <style>
+        textarea {
+            width: 300px;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Copiar contenido al portapapeles</h1>
+    <textarea id="textBox" placeholder="Escribe algo aquí..."></textarea>
+    <br>
+    <button onclick="copyToClipboard()">Copiar</button>
+
+    <script>
+        function copyToClipboard() {
+            const textBox = document.getElementById('textBox');
+            textBox.select(); 
+            textBox.setSelectionRange(0, 99999); 
+
+            try {
+                const successful = document.execCommand('copy'); 
+                if (successful) {
+                    alert('Texto copiado al portapapeles.');
+                } else {
+                    alert('No se pudo copiar el texto.');
+                }
+            } catch (err) {
+                console.error('Error al copiar:', err);
+                alert('Ocurrió un error al intentar copiar.');
+            }
+        }
+    </script>
+</body>
+</html>
