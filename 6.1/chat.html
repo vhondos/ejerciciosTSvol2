@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat entre ventanas</title>
+  <style>
+    .contenedor {
+      width: 80vw;
+      margin: 0 auto;
+      font-family: monospace;
+      font-size: 1.1rem;
+    }
+    #chatBox {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-top: 10px;
+      height: 200px;
+      overflow-y: scroll;
+    }
+    textarea {
+      width: 100%;
+      resize: vertical;
+      font-size: 1.2rem;
+    }
+    button {
+      width: 100%;
+      height: 80px;
+      font-size: 1.5rem;
+    }
+    #chatBox p {
+      margin: 0;
+    }
+    #chatBox p span {
+      font-weight: bold;
+    }
+    .v1 {
+      color: blue;
+    }
+    .v2 {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="contenedor">
+    <h1>Chat entre ventanas. <span id="nombre"></span></h1>
+    <textarea
+      id="mensaje"
+      cols="30"
+      rows="5"
+      onkeydown="if (event.key === 'Enter') enviarMensaje();"
+    ></textarea>
+    <br />
+    <button onclick="enviarMensaje()">Enviar</button>
+    <button onclick="abrirVentana()">Abrir Nueva Ventana</button>
+    <div id="chatBox"></div>
+  </div>
+
+  <script>
+    // Definir variables globales para manejar la ventana abierta y los nombres
+    let ventana2 = null;
+    const miNombre = "Ada";
+    const nombreOtro = "Lamarr";
+
+    // Mostrar el nombre del usuario
+    document.getElementById("nombre").innerHTML = miNombre;
+
+    // Función para abrir una nueva ventana
+    function abrirVentana() {
+      if (!ventana2 || ventana2.closed) {
+        ventana2 = window.open(
+          "chat.html", 
+          "chat", 
+          "width=300,height=400"
+        );
+      }
+    }
+
+    // Función para enviar un mensaje
+    function enviarMensaje() {
+      // Verificar si hay una ventana abierta y enviar el mensaje
+      if (ventana2 && !ventana2.closed) {
+        ventana2.postMessage(
+          {
+            tipo: "mensaje",
+            texto: document.getElementById("mensaje").value,
+          },
+          "*"
+        );
+      }
+      const chatBox = document.getElementById("chatBox");
+      chatBox.innerHTML += `<p><span class="v1">${miNombre}: </span>${document.getElementById("mensaje").value}</p>`;
+      document.getElementById("mensaje").value = "";  
+    }
+
+    // Escuchar los mensajes de la otra ventana
+    window.addEventListener(
+      "message",
+      function (event) {
+        const chatBox = document.getElementById("chatBox");
+        if (event.data.tipo === "mensaje") {
+          chatBox.innerHTML += `<p><span class="v2">${nombreOtro}: </span>${event.data.texto}</p>`;
+        }
+      },
+      false
+    );
+  </script>
+</body>
+</html>

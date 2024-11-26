@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat entre ventanas</title>
+    <style>
+      .contenedor {
+        width: 80vw;
+        margin: 0 auto;
+        font-family: monospace;
+        font-size: 1.2rem;
+      }
+      #chatBox {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-top: 10px;
+        height: 200px;
+        overflow-y: scroll;
+      }
+      textarea {
+        width: 100%;
+        resize: vertical;
+        font-size: 1.2rem;
+      }
+      button {
+        width: 100%;
+        height: 80px;
+        font-size: 1.5rem;
+      }
+      #chatBox p {
+        margin: 0;
+      }
+      #chatBox p span {
+        font-weight: bold;
+      }
+      .v1 {
+        color: blue;
+      }
+      .v2 {
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="contenedor">
+      <h1>Chat entre ventanas. <span id="nombre"></span> </h1>
+      <textarea
+        id="mensaje"
+        cols="30"
+        rows="5"
+        onkeydown="if (event.key === 'Enter') enviarMensaje();"
+      ></textarea>
+      <button onclick="enviarMensaje()">Enviar</button>
+      <div id="chatBox"></div>
+    </div>
+    <script>
+      // Ventana 2
+      const miNombre ="Lamarr";
+      const nombreOtro = "Ada";
+      document.getElementById("nombre").innerHTML = miNombre;
+      function enviarMensaje() {
+        window.opener.postMessage(
+          {
+            tipo: "mensaje",
+            texto: document.getElementById("mensaje").value,
+          },
+          "*"
+        );
+        const chatBox = document.getElementById("chatBox");
+        chatBox.innerHTML += `<p><span class="v1">${miNombre}: </span>${
+          document.getElementById("mensaje").value
+        }</p>`;
+        document.getElementById("mensaje").value = "";
+      }
+
+      window.addEventListener(
+        "message",
+        function (event) {
+          const chatBox = document.getElementById("chatBox");
+          if (event.data.tipo === "mensaje") {
+            chatBox.innerHTML += `<p><span class="v2">${nombreOtro}: </span>${event.data.texto}</p>`;
+          }
+        },
+        false
+      );
+    </script>
+  </body>
+</html>
